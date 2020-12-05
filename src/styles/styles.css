@@ -1,0 +1,28 @@
+:root {
+  --progressColor: #bada55;
+}
+*,
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+#nprogress .bar {
+  background: var(--progressColor);
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--progressColor), 0 0 5px var(--progressColor);
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--progressColor);
+  border-left-color: var(--progressColor);
+}
+
+.dot_container {
+  background-color: '#fff';
+}
