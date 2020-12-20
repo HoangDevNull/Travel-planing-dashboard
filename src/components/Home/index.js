@@ -2,14 +2,9 @@ import React from 'react';
 
 import { Box, Breadcrumbs, Link, Typography, Grid } from '@material-ui/core';
 
-import { useSelector } from 'react-redux';
-
 import AdminHome from './Admin';
-import TeacherHome from './Teacher';
-import StudentHome from './Student';
 
 const Home = () => {
-  const role = useSelector((state) => state.auth?.role);
   return (
     <Box>
       <Grid container>
@@ -27,9 +22,7 @@ const Home = () => {
         </Grid>
       </Grid>
 
-      {role === 'admin' && <AdminHome />}
-      {role === 'student' && <StudentHome />}
-      {role === 'teacher' && <TeacherHome />}
+      <AdminHome />
     </Box>
   );
 };

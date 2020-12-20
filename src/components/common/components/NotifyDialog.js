@@ -10,12 +10,9 @@ import {
   IconButton
 } from '@material-ui/core';
 import { Close, NotificationsActiveOutlined } from '@material-ui/icons';
-import { useTranslation } from 'react-i18next';
 
 const NotifyDialog = (props) => {
   const { content, open, onAgree, onClose } = props;
-
-  const { t } = useTranslation('dialog');
   return (
     <Dialog
       data-cy="dialogNotification"
@@ -31,7 +28,7 @@ const NotifyDialog = (props) => {
             <NotificationsActiveOutlined />
           </Grid>
           <Grid container item justify="flex-start" xs={10}>
-            {t('notification')}
+            Cảnh báo
           </Grid>
           <Grid container item justify="center" xs={1}>
             <IconButton onClick={() => onClose()}>
@@ -42,12 +39,12 @@ const NotifyDialog = (props) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {t(`${content}`)}
+          {content}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => onAgree()} color="primary" autoFocus>
-          {t('agree')}
+          Đồng ý
         </Button>
       </DialogActions>
     </Dialog>

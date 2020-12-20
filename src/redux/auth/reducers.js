@@ -1,6 +1,6 @@
 import { LOGIN, LOGOUT } from './types';
 
-import { getCookie } from 'utils/cookies';
+import { getCookie, removeCookie } from 'utils/cookies';
 let initState = {};
 const authCookie = getCookie('auth');
 if (authCookie) {
@@ -47,6 +47,7 @@ const authReducer = (state = initState, action) => {
         error: null
       };
     case LOGOUT.SUCCESS:
+      removeCookie('auth');
       return {
         access_token: null,
         role: null,

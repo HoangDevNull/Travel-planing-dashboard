@@ -9,7 +9,7 @@ const adminNavigationRoutes = [
   },
   {
     name: 'Người dùng',
-    to: 'users',
+    to: '/users',
     icon: {
       type: 'far',
       name: 'user'
@@ -17,7 +17,7 @@ const adminNavigationRoutes = [
   },
   {
     name: 'Bài viết',
-    to: '',
+    to: '/posts',
     icon: {
       type: 'fas',
       name: 'grip-horizontal'
@@ -25,7 +25,7 @@ const adminNavigationRoutes = [
   },
   {
     name: 'Ảnh',
-    to: '',
+    to: '/medias',
     icon: {
       type: 'fas',
       name: 'images'

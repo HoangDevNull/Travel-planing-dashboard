@@ -6,12 +6,12 @@ import ChartCard from './components/ChartCard';
 
 const data = [
   {
-    title: 'Tài khoản sinh viên đã active',
+    title: 'Tài khoản đã active',
     detail: '1234/1500',
     description: '80%'
   },
   {
-    title: 'Tài khoản giáo viên đã active',
+    title: 'Số bài viết được duyệt',
     detail: '100/150',
     description: '80%'
   },

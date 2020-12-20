@@ -34,7 +34,7 @@ const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
   datasets: [
     {
-      label: 'students',
+      label: 'Active users',
       fill: false,
       borderColor: '#3867d6',
       pointBorderColor: '#3867d6',
@@ -42,10 +42,10 @@ const data = {
       pointHoverBackgroundColor: '#3867d6',
       pointHoverBorderWidth: 8,
       pointRadius: 5,
-      data: [30, 59, 80, 81, 56, 55, 40]
+      data: [30, 1, 80, 23, 56, 1, 40]
     },
     {
-      label: 'teacher',
+      label: 'Viewers',
       fill: false,
       borderColor: purple[500],
       pointBorderColor: purple[500],
@@ -139,7 +139,7 @@ const Second = () => {
                 />
               </IconButton>
             }
-            title={<Typography variant="h5">Giáo viên đang online</Typography>}
+            title={<Typography variant="h5">Đang online</Typography>}
           />
           <Divider />
           <CardContent>

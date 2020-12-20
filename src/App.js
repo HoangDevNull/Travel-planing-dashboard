@@ -10,12 +10,15 @@ import {
 import { useSelector } from 'react-redux';
 
 import Home from 'components/Home';
+import Posts from 'components/Posts';
 import Users from 'components/Users';
 import Login from 'components/Login';
 import NotFound from 'components/404';
 import PrivateRoute from 'components/common/PrivateRoute';
 import PublicRoute from 'components/common/PublicRoute';
 import Layout from 'components/Layout';
+import AllPosts from 'components/ViewAllPost';
+import PostDetail from 'components/PostDetail';
 
 const App = () => {
   const isDark = useSelector((state) => state.theme.isDark);
@@ -61,6 +64,9 @@ const App = () => {
             <PublicRoute exact path="/signin" component={Login} />
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/home" component={Home} />
+            <PrivateRoute exact path="/posts" component={Posts} />
+            <PrivateRoute exact path="/all-posts" component={AllPosts} />
+            <PrivateRoute exact path="/post/:id" component={PostDetail} />
             <PrivateRoute exact path="/users" component={Users} />
             <PublicRoute exact path="/404" component={NotFound} />
             <PublicRoute component={NotFound} />
