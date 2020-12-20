@@ -1,25 +1,48 @@
-import { takeLatest, put, call } from "redux-saga/effects";
-import { SAMPLE } from "./types";
-import { sample } from "./actions";
-import { request } from "utils/apiRequest";
+import { takeLatest, put, call } from 'redux-saga/effects';
+import { LOGIN } from './types';
+import { loginAction } from './actions';
+import { request, LOGIN_URL } from 'utils/apiRequest';
 
-function* handleFetchSample(action) {
+import { snackbarAction } from '../snackbar';
+
+import { setCookie } from 'utils/cookies';
+
+const user = {
+  access_token: 'asdawdasdawd',
+  role: 'admin',
+  statusAccount: 'not activated',
+  isLoggedIn: true,
+  userProfile: {
+    lastName: 'admin',
+    avatar: 'https://material-ui.com/static/images/avatar/2.jpg'
+  }
+};
+
+function* handleLogin(action) {
   try {
     const { payload } = action;
-    // fetch sample list from api
-    const { data, status } = yield call(request, payload);
+    const email = payload?.email;
+    const password = payload?.password;
 
-    // call fail -> throw new error in catch function
-    if (status >= 400) {
-      throw new Error(data.errors);
+    if (email !== 'admin@onism.net' || password !== 'admin123') {
+      throw new Error('Email hoặc mật khẩu không chính xác !');
     }
 
-    yield put(sample.setSample(data));
+    yield put(loginAction.setLogin(user));
+    setCookie('auth', user);
   } catch (err) {
-    yield put(sample.setError(err.toString()));
+    const content = 'Email hoặc mật khẩu không chính xác !';
+
+    yield put(
+      snackbarAction.open({
+        content,
+        type: 'error'
+      })
+    );
+    yield put(loginAction.setError(content));
   }
 }
 
-export default function* watchSample() {
-  yield takeLatest(SAMPLE.LOAD, handleFetchSample);
+export default function* loginWatcher() {
+  yield takeLatest(LOGIN.LOAD, handleLogin);
 }

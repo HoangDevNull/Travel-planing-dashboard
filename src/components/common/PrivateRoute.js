@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
 
@@ -10,7 +11,7 @@ const CustomRoute = ({ component: Component, ...rest }) => {
     return () => nprogress.start();
   });
 
-  const isLogin = false;
+  const isLogin = useSelector((state) => state?.auth?.isLoggedIn);
 
   return (
     <Route

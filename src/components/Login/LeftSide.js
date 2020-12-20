@@ -9,15 +9,20 @@ import {
   IconButton,
   FormControlLabel,
   Checkbox,
-  Link,
-  Button
+  Link
 } from '@material-ui/core';
+
+import LoadingButton from 'components/common/components/LoadingButton';
+
+import { loginAction } from 'redux/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+
 library.add(fab, far, fas);
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const LeftSide = () => {
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);
   const [showPassword, setShowPassword] = useState(false);
   const [inputData, setInputData] = useState({
     email: '',
@@ -51,7 +60,7 @@ const LeftSide = () => {
       const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
       const isValid = re.test(String(value).toLowerCase());
-      if (!isValid) {
+      if (!isValid && value?.length > 0) {
         setError({ ...error, [name]: 'Email nhập vào không hợp lệ' });
       } else {
         error?.email !== '' && setError({ ...error, [name]: '' });
@@ -59,7 +68,7 @@ const LeftSide = () => {
       if (value.length > 254) return;
     } else {
       // Minimum password length have to be 6 character
-      if (value.length < 6 || value.length > 32) {
+      if ((value.length < 6 || value.length > 32) && value?.length !== 0) {
         setError({ ...error, [name]: 'Mật khẩu phải có từ 6-32 ký tự' });
       } else {
         error?.password !== '' && setError({ ...error, [name]: '' });
@@ -70,7 +79,15 @@ const LeftSide = () => {
     setInputData({ ...inputData, [name]: value });
   };
 
-  const classes = useStyles();
+  const handleLogin = () => {
+    const { email: emailError, password: passwordErr } = error;
+    if (emailError || passwordErr) {
+      return;
+    }
+
+    const { email, password } = inputData;
+    dispatch(loginAction.loadLogin({ email, password }));
+  };
 
   // Variable for render
   const { email, password } = inputData;
@@ -156,9 +173,20 @@ const LeftSide = () => {
 
         <Grid item xs={12}>
           <Box mt="20px" />
-          <Button fullWidth variant="contained" color="primary">
-            Login
-          </Button>
+          <LoadingButton
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={handleLogin}
+            disabled={
+              passwordError?.length > 1 ||
+              emailError?.length > 1 ||
+              email?.length === 0 ||
+              password?.lenght === 0
+            }
+            loading={loading}
+            label="Login"
+          />
         </Grid>
       </Grid>
     </Box>

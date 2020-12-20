@@ -1,8 +1,8 @@
-import reducer from "./reducers";
-import * as types from "./types";
-import { sample as sampleAction } from "./actions";
-import sampleSaga from "./sagas";
+import reducer from './reducers';
+import * as types from './types';
+import { loginAction, logoutAction } from './actions';
+import authSaga from './sagas';
 
-export { types, sampleSaga, sampleAction };
+export { types, authSaga, loginAction, logoutAction };
 
 export default reducer;

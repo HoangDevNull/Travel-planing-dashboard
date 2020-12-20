@@ -4,9 +4,7 @@ import {
   makeStyles,
   Box,
   IconButton,
-  Badge,
-  Avatar,
-  Button
+  Badge
 } from '@material-ui/core';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { themeAction } from 'redux/theme';
 
 import SearchInput from './components/SearchInput';
+import UserProfile from './components/UserProfile';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -45,18 +44,18 @@ const useStyles = makeStyles((theme) => ({
 const SidebarHead = () => {
   const dispatch = useDispatch();
   const isDark = useSelector((state) => state.theme.isDark);
-
+  const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn);
   const toggleTheme = () => {
     dispatch(themeAction.loadTheme(!isDark));
   };
 
-  const iconColor = isDark ? '#333' : '#fff';
+  const iconColor = '#fff';
 
   const classes = useStyles();
   return (
     <>
       <Typography className={classes.title} variant="body1" noWrap>
-        Hi, wellcome back
+        Chào bạn
       </Typography>
 
       <SearchInput />
@@ -64,37 +63,28 @@ const SidebarHead = () => {
       <Box flex="1" />
 
       <Box display="flex" justifyContent="space-around" alignItems="center">
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="error">
-            <FontAwesomeIcon color={iconColor} icon={['far', 'envelope']} />
-          </Badge>
-        </IconButton>
-        <IconButton color="inherit">
-          <Badge badgeContent={17} color="error">
-            <FontAwesomeIcon color={iconColor} icon={['far', 'bell']} />
-          </Badge>
-        </IconButton>
+        {isLoggedIn && (
+          <>
+            <IconButton color="inherit">
+              <Badge badgeContent={4} color="error">
+                <FontAwesomeIcon color={iconColor} icon={['far', 'envelope']} />
+              </Badge>
+            </IconButton>
+            <IconButton color="inherit">
+              <Badge badgeContent={17} color="error">
+                <FontAwesomeIcon color={iconColor} icon={['far', 'bell']} />
+              </Badge>
+            </IconButton>
+          </>
+        )}
         <IconButton color="inherit" onClick={toggleTheme}>
           <FontAwesomeIcon
             color={iconColor}
             icon={['far', isDark ? 'sun' : 'moon']}
           />
         </IconButton>
-        <Button
-          color="inherit"
-          startIcon={
-            <Avatar
-              variant="rounded"
-              alt="Remy Sharp"
-              src="https://material-ui.com/static/images/avatar/1.jpg"
-              className={classes.small}
-            />
-          }
-        >
-          <Typography className={classes.user_name} noWrap variant="body1">
-            Hoang
-          </Typography>
-        </Button>
+
+        <UserProfile />
       </Box>
     </>
   );

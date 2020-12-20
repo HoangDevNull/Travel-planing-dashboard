@@ -17,7 +17,7 @@ import { Notes as NotesIcon } from '@material-ui/icons';
 
 import clsx from 'clsx';
 
-import ListSideBarItem from './components/ListSidebarItem';
+import Navigation from './Navigation';
 import SidebarHead from './SidebarHead';
 
 const drawerWidth = 230;
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
+    width: 0,
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1
     }
@@ -139,12 +139,12 @@ const Sidebar = ({ children }) => {
         <div className={classes.toolbar}>
           <Link className={classes.btn_logo} underline="none" href="#">
             <Button>
-              <Typography variant="h5">VKU lab</Typography>
+              <Typography variant="h5">ONISM</Typography>
             </Button>
           </Link>
         </div>
         <Divider variant="middle" />
-        <ListSideBarItem />
+        <Navigation />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

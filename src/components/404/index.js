@@ -1,21 +1,23 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 
-const styles = (theme) => ({
-  root: {
-    display: 'block',
-    overflow: 'hidden',
-    color: '#FFAF1C',
-    minHeight: '100vh'
-  }
-});
+import PageNotFoundImage from 'assert/images/page_not_found.svg';
 
-const PageNotFound = ({ classes }) => {
+const PageNotFound = () => {
   return (
-    <>
-      <h1>404</h1>
-    </>
+    <Box
+      minHeight="80vh"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      flexDirection="column"
+    >
+      <Box height="calc(100vh - 300px)">
+        <img src={PageNotFoundImage} alt="notify" />
+      </Box>
+      <Typography variant="h2">Page not found</Typography>
+    </Box>
   );
 };
 
-export default withStyles(styles)(PageNotFound);
+export default PageNotFound;

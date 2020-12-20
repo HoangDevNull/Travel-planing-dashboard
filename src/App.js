@@ -10,6 +10,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import Home from 'components/Home';
+import Users from 'components/Users';
 import Login from 'components/Login';
 import NotFound from 'components/404';
 import PrivateRoute from 'components/common/PrivateRoute';
@@ -19,12 +20,13 @@ import Layout from 'components/Layout';
 const App = () => {
   const isDark = useSelector((state) => state.theme.isDark);
   const palletType = isDark ? 'dark' : 'light';
-  const mainPrimaryColor = isDark ? '#8e44ad' : `#3867d6`;
+  const mainPrimaryColor = isDark ? '#a67dff' : `#3867d6`;
   const mainPrimaryColorLight = isDark ? '#9b59b6' : `#4b7bec`;
   const mainSecondaryColor = `#FFFFFF`;
-  const textColor = isDark ? `#FFFFFF` : `#333333`;
+  const textColor = isDark ? `#FFFFFF` : `#7f8c8d`;
   const bnw = isDark ? `#FFFFFF` : `#000000`;
-
+  const paperBg = isDark ? '#2a2d3d' : '#fff';
+  const bodyBackground = isDark ? '#222431' : '#fafafa';
   // A custom theme for this app
   let theme = createMuiTheme({
     palette: {
@@ -37,6 +39,10 @@ const App = () => {
       },
       secondary: {
         main: mainSecondaryColor
+      },
+      background: {
+        paper: paperBg,
+        default: bodyBackground
       }
     },
     typography: {
@@ -55,6 +61,7 @@ const App = () => {
             <PublicRoute exact path="/signin" component={Login} />
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/home" component={Home} />
+            <PrivateRoute exact path="/users" component={Users} />
             <PublicRoute exact path="/404" component={NotFound} />
             <PublicRoute component={NotFound} />
           </Switch>
