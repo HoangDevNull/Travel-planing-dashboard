@@ -35,7 +35,9 @@ class ConvertToRawDraftContent extends Component {
     const { editorState } = this.state;
     return (
       <>
-        <div className="rdw-storybook-root">
+        <div className="rdw-storybook-root" style={{
+          width : '70%'
+        }}>
           <Editor
             editorState={editorState}
             toolbarHidden
