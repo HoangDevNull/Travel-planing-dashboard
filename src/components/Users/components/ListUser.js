@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Table,
   TableBody,
@@ -15,21 +15,21 @@ import {
   TableRow,
   Toolbar,
   Button
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import Alert from '@material-ui/lab/Alert';
-import clsx from 'clsx';
+import Alert from "@material-ui/lab/Alert";
+import clsx from "clsx";
 
-import ArrowForwardOutlinedIcon from '@material-ui/icons/ArrowForwardOutlined';
-import BlockIcon from '@material-ui/icons/Block';
+import ArrowForwardOutlinedIcon from "@material-ui/icons/ArrowForwardOutlined";
+import BlockIcon from "@material-ui/icons/Block";
 
-import { HoverbleTableRow } from 'components/common/components/StyledTable';
+import { HoverbleTableRow } from "components/common/components/StyledTable";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 
 library.add(fab, far, fas);
 
@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   alert: {
     maxWidth: 150,
-    padding: '0px 10px',
-    margin: 'auto'
+    padding: "0px 10px",
+    margin: "auto"
   },
   toolBar: {
     paddingLeft: theme.spacing(2),
@@ -63,17 +63,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.action.hover
   },
   title: {
-    flex: '1 1 100%'
+    flex: "1 1 100%"
   },
   caption_text: {
     marginLeft: 10,
     marginRight: 10,
     color: theme.palette.secondary.main,
     backgroundColor: theme.palette.primary.main,
-    cursor: 'default',
+    cursor: "default",
     height: 20,
-    padding: '4px 8px',
-    fontSize: '0.75rem',
+    padding: "4px 8px",
+    fontSize: "0.75rem",
     minWidth: 20,
     fontWeight: 500,
     borderRadius: 2,
@@ -81,36 +81,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function createData(lastName, email, address, phoneNumber, statusAccount) {
-  return { lastName, email, address, phoneNumber, statusAccount };
-}
-
-const rows = [
-  createData('Mr.T', 'Mr.T@gmail.com', 'Viet Nam', '5', 'activated'),
-  createData('Ms.K', 'Ms.K@gmail.com', 'USA', '2', 'blocked'),
-  createData('Ms.b', 'Ms.A@gmail.com', 'Viet Nam', '3', 'activated'),
-  createData('Ms.c', 'Ms.A@gmail.com', 'Singapore', '7', 'activated'),
-  createData('Ms.d', 'Ms.A@gmail.com', 'Viet Nam', '8', 'blocked'),
-  createData('Ms.e', 'Ms.A@gmail.com', 'Viet Nam', '3', 'activated'),
-  createData('Ms.f', 'Ms.A@gmail.com', 'Viet Nam', '6', 'activated')
-];
-
 const statusAccount = [
   {
-    name: 'activated',
-    type: 'success'
+    name: "activated",
+    type: "success"
   },
   {
-    name: 'not activated',
-    type: 'warning'
+    name: "not activated",
+    type: "warning"
   },
   {
-    name: 'blocked',
-    type: 'error'
+    name: "blocked",
+    type: "error"
   }
 ];
 
-const TableTeacher = () => {
+const TableTeacher = ({ data: rows, onBlockUser }) => {
   const classes = useStyles();
   const [selected, setSelected] = React.useState([]);
 
@@ -142,7 +128,8 @@ const TableTeacher = () => {
         return;
       }
       // Check all
-      const newSelecteds = rows.map((n) => n.lastName);
+      const rowsFilter = rows.filter((i) => i.statusAccount !== "blocked");
+      const newSelecteds = rowsFilter.map((n) => n.lastName);
       setSelected(newSelecteds);
       return;
     }
@@ -150,6 +137,16 @@ const TableTeacher = () => {
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+
+  if (rows.length === 0) {
+    return (
+      <Box width="100%" minHeight="50vh" pt="20vh">
+        <Typography align="center" variant="h4">
+          Xin lỗi,Không có kết quả nào
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <TableContainer>
@@ -177,6 +174,9 @@ const TableTeacher = () => {
               startIcon={<BlockIcon color="error" />}
               variant="outlined"
               color="inherit"
+              onClick={() => {
+                onBlockUser(selected);
+              }}
             >
               Block
             </Button>
@@ -197,7 +197,7 @@ const TableTeacher = () => {
                 }
                 checked={rows.length > 0 && selected.length === rows.length}
                 onChange={handleSelectAll}
-                inputProps={{ 'aria-label': 'select all desserts' }}
+                inputProps={{ "aria-label": "select all desserts" }}
                 color="primary"
               />
             </TableCell>
@@ -213,8 +213,8 @@ const TableTeacher = () => {
             <TableCell align="center" size="small">
               <b>Trạng thái tài khoản</b>
             </TableCell>
-            <TableCell align="right" size="small">
-              <b>Action</b>
+            <TableCell align="center" size="small">
+              <b>hoạt động</b>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -228,6 +228,7 @@ const TableTeacher = () => {
                     color="primary"
                     checked={isItemSelected}
                     onClick={(event) => handleClick(event, row.lastName)}
+                    disabled={row.statusAccount === "blocked"}
                   />
                 </TableCell>
                 <TableCell align="left">
@@ -264,12 +265,8 @@ const TableTeacher = () => {
                     {row.statusAccount}
                   </Alert>
                 </TableCell>
-                <TableCell align="right">
-                  <Box>
-                    <IconButton>
-                      <ArrowForwardOutlinedIcon size="small" />
-                    </IconButton>
-                  </Box>
+                <TableCell align="center">
+                  <Typography variant="body2">{row.activity}</Typography>
                 </TableCell>
               </HoverbleTableRow>
             );

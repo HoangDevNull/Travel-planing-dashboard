@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   makeStyles,
   Card,
@@ -8,13 +8,13 @@ import {
   CardHeader,
   Box,
   Avatar
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import { EditOutlined, BlockOutlined } from '@material-ui/icons';
-import { Alert } from '@material-ui/lab';
-import { useHistory } from 'react-router-dom';
+import { EditOutlined, BlockOutlined } from "@material-ui/icons";
+import { Alert } from "@material-ui/lab";
+import { useHistory } from "react-router-dom";
 
-import NotifyDialog from 'components/common/components/NotifyDialog';
+import NotifyDialog from "components/common/components/NotifyDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,30 +27,30 @@ const useStyles = makeStyles((theme) => ({
   date_circle: {
     width: theme.spacing(4),
     height: theme.spacing(4),
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '50%',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "50%",
     marginTop: 20
   },
   active_date: {
     background: theme.palette.primary.main,
-    color: '#fff'
+    color: "#fff"
   },
   alert: {
-    padding: '0px 10px',
+    padding: "0px 10px",
     marginTop: 5
   },
   font_bold: {
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   p_5: {
     fontSize: 12,
     padding: 5
   },
   content: {
-    padding: '0px 16px',
-    '&:last-child': {
+    padding: "0px 16px",
+    "&:last-child": {
       paddingBottom: 16
     }
   }
@@ -58,16 +58,16 @@ const useStyles = makeStyles((theme) => ({
 
 const statusData = [
   {
-    name: 'Activated',
-    type: 'success'
+    name: "Activated",
+    type: "success"
   },
   {
-    name: 'Pending',
-    type: 'warning'
+    name: "Pending",
+    type: "warning"
   },
   {
-    name: 'Blocked',
-    type: 'error'
+    name: "Blocked",
+    type: "error"
   }
 ];
 
@@ -78,7 +78,7 @@ const PostCard = ({ id, title, createdAt, user, category, status }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleEdit = () => {
-    history.push('/post/' + id);
+    history.push("/post/" + id);
   };
   const handleBlock = () => {
     setOpen(true);
@@ -102,9 +102,11 @@ const PostCard = ({ id, title, createdAt, user, category, status }) => {
             </Alert>
           }
           title={
-            <Typography variant="body2" className={classes.font_bold}>
-              {title}
-            </Typography>
+            <Box maxWidth="150px">
+              <Typography variant="body2" className={classes.font_bold} noWrap>
+                {title}
+              </Typography>
+            </Box>
           }
         />
 
@@ -137,7 +139,7 @@ const PostCard = ({ id, title, createdAt, user, category, status }) => {
                 <IconButton
                   color="primary"
                   onClick={handleBlock}
-                  disabled={status === 'Blocked'}
+                  disabled={status === "Blocked"}
                 >
                   <BlockOutlined />
                 </IconButton>

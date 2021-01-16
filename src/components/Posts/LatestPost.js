@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   makeStyles,
   Card,
@@ -10,12 +10,12 @@ import {
   Box,
   Grid,
   Button
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import PostCard from './components/PostCard';
-import { MoreVert } from '@material-ui/icons';
-import clsx from 'clsx';
-import { useHistory } from 'react-router-dom';
+import PostCard from "./components/PostCard";
+import { MoreVert } from "@material-ui/icons";
+import clsx from "clsx";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,95 +28,95 @@ const useStyles = makeStyles((theme) => ({
   date_circle: {
     width: theme.spacing(4),
     height: theme.spacing(4),
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '50%',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "50%",
     marginTop: 20
   },
   active_date: {
     background: theme.palette.primary.main,
-    color: '#fff'
+    color: "#fff"
   },
   font_bold: {
-    fontWeight: 'bold'
+    fontWeight: "bold"
   }
 }));
 
-const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const postData = [
   {
     id: 1,
-    title: 'Travel around the word with only 1$',
-    createdAt: 'December 23, 2018',
+    title: "Travel around the word with only 1$",
+    createdAt: "December 23, 2018",
     user: {
-      username: 'George Fields',
+      username: "George Fields",
       avatar:
-        'https://react-material-kit.devias.io/static/images/avatars/avatar_1.png'
+        "https://react-material-kit.devias.io/static/images/avatars/avatar_1.png"
     },
-    category: 'Travel on budget trips',
-    status: 'Activated'
+    category: "Travel on budget trips",
+    status: "Activated"
   },
   {
     id: 2,
-    title: 'Travel around the word with only 1$',
-    createdAt: 'December 23, 2018',
+    title: "Travel around the word with only 1$",
+    createdAt: "December 23, 2018",
     user: {
-      username: 'George Fields',
+      username: "George Fields",
       avatar:
-        'https://react-material-kit.devias.io/static/images/avatars/avatar_2.png'
+        "https://react-material-kit.devias.io/static/images/avatars/avatar_2.png"
     },
-    category: 'Travel on budget trips',
-    status: 'Activated'
+    category: "Travel on budget trips",
+    status: "Activated"
   },
   {
     id: 3,
-    title: 'Travel around the word with only 1$',
-    createdAt: 'December 23, 2018',
+    title: "Travel around the word with only 1$",
+    createdAt: "December 23, 2018",
     user: {
-      username: 'George Fields',
+      username: "George Fields",
       avatar:
-        'https://react-material-kit.devias.io/static/images/avatars/avatar_3.png'
+        "https://react-material-kit.devias.io/static/images/avatars/avatar_3.png"
     },
-    category: 'Travel on budget trips',
-    status: 'Pending'
+    category: "Travel on budget trips",
+    status: "Pending"
   },
   {
     id: 4,
-    title: 'Travel around the word with only 1$',
-    createdAt: 'December 23, 2018',
+    title: "Travel around the word with only 1$",
+    createdAt: "December 23, 2018",
     user: {
-      username: 'George Fields',
+      username: "George Fields",
       avatar:
-        'https://react-material-kit.devias.io/static/images/avatars/avatar_4.png'
+        "https://react-material-kit.devias.io/static/images/avatars/avatar_4.png"
     },
-    category: 'Travel on budget trips',
-    status: 'Blocked'
+    category: "Travel on budget trips",
+    status: "Blocked"
   },
   {
     id: 5,
-    title: 'Travel around the word with only 1$',
-    createdAt: 'December 23, 2018',
+    title: "Travel around the word with only 1$",
+    createdAt: "December 23, 2018",
     user: {
-      username: 'George Fields',
+      username: "George Fields",
       avatar:
-        'https://react-material-kit.devias.io/static/images/avatars/avatar_6.png'
+        "https://react-material-kit.devias.io/static/images/avatars/avatar_6.png"
     },
-    category: 'Travel on budget trips',
-    status: 'Blocked'
+    category: "Travel on budget trips",
+    status: "Blocked"
   },
   {
     id: 6,
-    title: 'Travel around the word with only 1$',
-    createdAt: 'December 23, 2018',
+    title: "Travel around the word with only 1$",
+    createdAt: "December 23, 2018",
     user: {
-      username: 'George Fields',
+      username: "George Fields",
       avatar:
-        'https://react-material-kit.devias.io/static/images/avatars/avatar_7.png'
+        "https://react-material-kit.devias.io/static/images/avatars/avatar_7.png"
     },
-    category: 'Travel on budget trips',
-    status: 'Blocked'
+    category: "Travel on budget trips",
+    status: "Blocked"
   }
 ];
 
@@ -124,7 +124,7 @@ const LatestPost = () => {
   const history = useHistory();
   const classes = useStyles();
   const handleClickViewAll = () => {
-    history.push('/all-posts');
+    history.push("/all-posts");
   };
   return (
     <Card className={classes.root}>
@@ -177,7 +177,7 @@ const LatestPost = () => {
 
         <Grid container spacing={3}>
           {postData.map((item) => (
-            <Grid key={item.id} item xs={6}>
+            <Grid key={item.id} item xs={12} md={6}>
               <PostCard {...item} />
             </Grid>
           ))}

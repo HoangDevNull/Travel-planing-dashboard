@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   Breadcrumbs,
@@ -14,28 +14,126 @@ import {
   FormControl,
   Select,
   InputLabel
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
-import TableTeacher from './components/TableTeacher';
-import withRole from 'components/common/HOC/withRole';
+import ListUser from "./components/ListUser";
+import withRole from "components/common/HOC/withRole";
 
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
-import SearchIcon from '@material-ui/icons/Search';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
+import SearchIcon from "@material-ui/icons/Search";
+import NotifyDialog from "components/common/components/NotifyDialog";
+
+function createData(
+  lastName,
+  email,
+  address,
+  phoneNumber,
+  statusAccount,
+  activity
+) {
+  return { lastName, email, address, phoneNumber, statusAccount, activity };
+}
+
+const rows = [
+  createData(
+    "Johny Hung",
+    "JohnyHung@gmail.com",
+    "Viet Nam",
+    "5",
+    "activated",
+    "15 phút trước"
+  ),
+  createData("Ms.K", "Ms.K@gmail.com", "USA", "2", "blocked", "1 giờ trước"),
+  createData(
+    "Lisa Nguyen",
+    "Lisa Nguyen@gmail.com",
+    "Viet Nam",
+    "3",
+    "activated",
+    "7 ngày trước"
+  ),
+  createData(
+    "Retail Row",
+    "Retail Row@gmail.com",
+    "Singapore",
+    "7",
+    "activated",
+    "3 phút trước"
+  ),
+  createData("Adam ", "Adam@gmail.com", "Viet Nam", "8", "blocked", "Bây giờ"),
+  createData(
+    "Rodrigo Werner",
+    "rodrigo@gmail.com",
+    "Viet Nam",
+    "3",
+    "activated",
+    "15 ngày trước"
+  ),
+  createData(
+    "Hina Bloggs",
+    "hina@gmail.com",
+    "Viet Nam",
+    "6",
+    "activated",
+    "1 tháng trước"
+  )
+];
 
 const TeacherManager = () => {
-  const history = useHistory();
-  const [tabSelected, setTabSelected] = React.useState('1');
-  const [sortOption, setSortOption] = React.useState('A -> Z');
+  const [tabSelected, setTabSelected] = React.useState("1");
+  const [data, setData] = React.useState(rows);
+
+  const [blockUsers, setBlockUsers] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [sortOption, setSortOption] = React.useState("desc");
   const handleTabChanges = (event, newtabSelected) => {
     setTabSelected(newtabSelected);
   };
 
   const handleSortTable = (e) => {
-    console.log(e.target.value);
-    setSortOption(e.target.value);
+    const option = e.target.value;
+    setSortOption(option);
+    if (option === "asc") {
+      setData(
+        rows.sort(function (a, b) {
+          return a.lastName.localeCompare(b.lastName);
+        })
+      );
+    } else {
+      rows.sort(function (a, b) {
+        return b.lastName.localeCompare(a.lastName);
+      });
+    }
+  };
+
+  const handleBlockUser = () => {
+    const users = [...data];
+
+    users.forEach((user, i) => {
+      if (blockUsers.includes(user.lastName)) {
+        users[i].statusAccount = "blocked";
+      }
+    });
+    setData(users);
+    setOpen(false);
+  };
+
+  const handleOpenDialog = (listUser) => {
+    setBlockUsers(listUser);
+    console.log({ listUser });
+    setOpen(true);
+  };
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    const searchedUser = rows.filter((user) => user.lastName.includes(value));
+
+    setData(searchedUser);
+    if (value === "") {
+      setData(rows);
+    }
   };
 
   return (
@@ -74,7 +172,7 @@ const TeacherManager = () => {
 
       <Box mt="24px">
         <Paper>
-          <Tabs
+          {/* <Tabs
             value={tabSelected}
             indicatorColor="primary"
             textColor="primary"
@@ -85,7 +183,7 @@ const TeacherManager = () => {
             <Tab label="Đã bị block" value="2" />
             <Tab label="Chưa kích hoạt" value="3" />
           </Tabs>
-          <Divider />
+          <Divider /> */}
 
           {/* Filter */}
 
@@ -103,6 +201,7 @@ const TeacherManager = () => {
                 placeholder="Tìm kiếm người dùng"
                 type="search"
                 variant="outlined"
+                onChange={handleSearch}
               />
             </Box>
             <Box flexGrow="1" />
@@ -117,8 +216,8 @@ const TeacherManager = () => {
                   onChange={handleSortTable}
                   label="Sắp xếp"
                 >
-                  <option value="desc">{'Tên người dùng từ A -> Z'}</option>
-                  <option value="asc">{' Tên người dùng từ Z -> A'}</option>
+                  <option value="desc">{"Tên người dùng từ A -> Z"}</option>
+                  <option value="asc">{" Tên người dùng từ Z -> A"}</option>
                 </Select>
               </FormControl>
             </Box>
@@ -127,12 +226,39 @@ const TeacherManager = () => {
           {/* Table */}
 
           <Box>
-            <TableTeacher type={tabSelected} />
+            <ListUser
+              type={tabSelected}
+              data={data}
+              onBlockUser={handleOpenDialog}
+            />
           </Box>
         </Paper>
       </Box>
+
+      <NotifyDialog
+        content={
+          <>
+            <Typography component="span" variant="h6">
+              Bạn có chắc chắn muốn block các user đã chọn:
+            </Typography>
+            <br />
+            {blockUsers.map((user, i) => (
+              <Typography component="span" key={i} variant="body2">
+                <Box component="span" fontWeight="bold">{`${user} ${
+                  i !== blockUsers.length - 1 ? "," : " "
+                }  `}</Box>
+              </Typography>
+            ))}
+          </>
+        }
+        open={open}
+        onAgree={handleBlockUser}
+        onClose={() => {
+          setOpen(false);
+        }}
+      />
     </Box>
   );
 };
 
-export default withRole(TeacherManager, 'admin');
+export default withRole(TeacherManager, "admin");

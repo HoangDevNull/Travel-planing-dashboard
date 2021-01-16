@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Dialog,
   DialogTitle,
@@ -8,8 +8,8 @@ import {
   Grid,
   Button,
   IconButton
-} from '@material-ui/core';
-import { Close, NotificationsActiveOutlined } from '@material-ui/icons';
+} from "@material-ui/core";
+import { Close, NotificationsActiveOutlined } from "@material-ui/icons";
 
 const NotifyDialog = (props) => {
   const { content, open, onAgree, onClose } = props;
@@ -28,7 +28,7 @@ const NotifyDialog = (props) => {
             <NotificationsActiveOutlined />
           </Grid>
           <Grid container item justify="flex-start" xs={10}>
-            Cảnh báo
+            Thông báo
           </Grid>
           <Grid container item justify="center" xs={1}>
             <IconButton onClick={() => onClose()}>
@@ -43,8 +43,16 @@ const NotifyDialog = (props) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => onAgree()} color="primary" autoFocus>
+        <Button
+          onClick={() => onAgree()}
+          variant="contained"
+          color="primary"
+          autoFocus
+        >
           Đồng ý
+        </Button>
+        <Button onClick={() => onClose()} variant="outlined">
+          Huỷ bỏ
         </Button>
       </DialogActions>
     </Dialog>
