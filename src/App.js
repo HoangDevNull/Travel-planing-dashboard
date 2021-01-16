@@ -19,6 +19,7 @@ import PublicRoute from 'components/common/PublicRoute';
 import Layout from 'components/Layout';
 import AllPosts from 'components/ViewAllPost';
 import PostDetail from 'components/PostDetail';
+import Media from 'components/Media';
 
 const App = () => {
   const isDark = useSelector((state) => state.theme.isDark);
@@ -68,6 +69,7 @@ const App = () => {
             <PrivateRoute exact path="/all-posts" component={AllPosts} />
             <PrivateRoute exact path="/post/:id" component={PostDetail} />
             <PrivateRoute exact path="/users" component={Users} />
+            <PrivateRoute exact path="/medias" component={Media} />
             <PublicRoute exact path="/404" component={NotFound} />
             <PublicRoute component={NotFound} />
           </Switch>
