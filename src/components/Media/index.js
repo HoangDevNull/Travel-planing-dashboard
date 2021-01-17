@@ -9,16 +9,16 @@ import {
   makeStyles,
   GridList,
   GridListTile,
-  ListSubheader,
   GridListTileBar,
   IconButton
 } from '@material-ui/core';
 
-import { StarBorder as StarBorderIcon } from '@material-ui/icons';
+import { Info } from '@material-ui/icons';
 
 import { useHistory } from 'react-router-dom';
 import withRole from 'components/common/HOC/withRole';
 import data from './data';
+import DialogImage from './components/DialogImage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,12 +41,21 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     color: 'white'
+  },
+  img: {
+    objectFit: 'cover'
   }
 }));
 
 const Media = () => {
   const history = useHistory();
   const classes = useStyles();
+  let dialogRef = React.createRef();
+
+  const handleOpenDialog = (index) => {
+    const image = data[index];
+    dialogRef.open(image);
+  };
 
   return (
     <Box>
@@ -79,32 +88,35 @@ const Media = () => {
           <Divider />
 
           <Grid item xs={12} className={classes.root}>
-            <GridList cellHeight={150} spacing={2} className={classes.gridList}>
+            <GridList cellHeight={350} className={classes.gridList}>
               {data.map((tile, i) => {
                 const randomPhoto = Math.floor(Math.random() * 5000) + 1;
-                const randomHeight = Math.floor(Math.random() * 5) + 2;
-                const randomWidth = Math.floor(Math.random() * 5) + 2;
-                const imgUrl = `https://picsum.photos/${randomWidth}00/${randomHeight}00?random=${randomPhoto}`;
+
+                const imgUrl = `https://picsum.photos/1920/1080?random=${randomPhoto}`;
                 const randomRow = Math.floor(Math.random() * 2) + 1;
                 return (
                   <GridListTile
                     key={imgUrl}
                     cols={i % 2 !== 0 || tile.status === 'Pending' ? 0.5 : 1}
-                    rows={randomRow}
+                    rows={1}
                   >
-                    <img src={imgUrl} alt={tile.title} />
+                    <img
+                      className={classes.img}
+                      src={imgUrl}
+                      alt={tile.title}
+                    />
                     <GridListTileBar
                       title={tile.title}
-                      titlePosition='top'
                       actionIcon={
                         <IconButton
                           aria-label={`star ${tile.title}`}
                           className={classes.icon}
+                          onClick={() => handleOpenDialog(i)}
                         >
-                          <StarBorderIcon />
+                          <Info />
                         </IconButton>
                       }
-                      actionPosition='left'
+                      actionPosition='right'
                       className={classes.titleBar}
                     />
                   </GridListTile>
@@ -114,6 +126,12 @@ const Media = () => {
           </Grid>
         </Grid>
       </Grid>
+
+      <DialogImage
+        getRef={(ref) => {
+          dialogRef = ref;
+        }}
+      />
     </Box>
   );
 };
