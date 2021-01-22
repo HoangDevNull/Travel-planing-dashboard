@@ -22,6 +22,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 library.add(fab, far, fas);
 
@@ -89,55 +90,61 @@ const LeftSide = () => {
     dispatch(loginAction.loadLogin({ email, password }));
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin();
+    }
+  };
+
   // Variable for render
   const { email, password } = inputData;
   const { email: emailError, password: passwordError } = error;
   return (
     <Box className={classes.root}>
-      <Grid container justify="flex-start">
+      <Grid container justify='flex-start'>
         <Grid item xs={12}>
-          <Typography variant="h5">Đăng nhập</Typography>
+          <Typography variant='h5'>Đăng nhập</Typography>
         </Grid>
 
         <Grid item xs={12}>
-          <Box mt="20px" />
-          <Typography variant="body2">Tài khoản</Typography>
+          <Box mt='20px' />
+          <Typography variant='body2'>Tài khoản</Typography>
         </Grid>
         <Grid item xs={12}>
           <TextField
-            placeholder="Điền tên tài khoản. VD: nva.17it2@vku.udn.vn"
+            placeholder='Điền tên tài khoản. VD: nva.17it2@vku.udn.vn'
             fullWidth
-            margin="normal"
-            variant="outlined"
-            type="email"
+            margin='normal'
+            variant='outlined'
+            type='email'
             value={email}
-            name="email"
+            name='email'
             onChange={handleInputChange}
             error={emailError.length > 1}
             helperText={emailError}
           />
         </Grid>
         <Grid item xs={12}>
-          <Box mt="10px" />
-          <Typography variant="body2">Mật khẩu</Typography>
+          <Box mt='10px' />
+          <Typography variant='body2'>Mật khẩu</Typography>
         </Grid>
         <Grid item xs={12}>
           <TextField
-            placeholder="Điền mật khẩu"
+            placeholder='Điền mật khẩu'
             fullWidth
-            margin="normal"
-            variant="outlined"
+            margin='normal'
+            variant='outlined'
             type={showPassword ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position='end'>
                   <IconButton
                     onClick={() => setShowPassword(!showPassword)}
                     onMouseDown={(e) => e.preventDefault()}
-                    edge="end"
+                    edge='end'
                   >
                     <FontAwesomeIcon
-                      size="sm"
+                      size='sm'
                       icon={['far', showPassword ? 'eye-slash' : 'eye']}
                     />
                   </IconButton>
@@ -145,38 +152,39 @@ const LeftSide = () => {
               )
             }}
             value={password}
-            name="password"
+            name='password'
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             error={passwordError.length > 1}
             helperText={passwordError}
           />
         </Grid>
         <Grid item xs={12}>
-          <Box mt="20px" />
-          <Grid container justify="space-between">
+          <Box mt='20px' />
+          <Grid container justify='space-between'>
             <FormControlLabel
               control={
                 <Checkbox
                   checked={isRememberMe}
                   onChange={(e) => setIsRememberMe(e.target.checked)}
-                  color="primary"
+                  color='primary'
                 />
               }
-              label="Lưu phiên đăng nhập"
+              label='Lưu phiên đăng nhập'
             />
 
-            <Box mt="10px">
-              <Link href="#">Reset password</Link>
+            <Box mt='10px'>
+              <Link href='#'>Reset password</Link>
             </Box>
           </Grid>
         </Grid>
 
         <Grid item xs={12}>
-          <Box mt="20px" />
+          <Box mt='20px' />
           <LoadingButton
             fullWidth
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             onClick={handleLogin}
             disabled={
               passwordError?.length > 1 ||
@@ -185,10 +193,18 @@ const LeftSide = () => {
               password?.lenght === 0
             }
             loading={loading}
-            label="Login"
+            label='Login'
           />
         </Grid>
       </Grid>
+
+      <Box mt={3}>
+        <Alert severity='info'>
+          <AlertTitle>User test</AlertTitle>
+          You can use <strong>admin@onism.net</strong> and password{' '}
+          <strong>admin123</strong>
+        </Alert>
+      </Box>
     </Box>
   );
 };

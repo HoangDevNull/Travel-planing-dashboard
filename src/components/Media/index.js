@@ -106,12 +106,12 @@ const Media = () => {
                       alt={tile.title}
                     />
                     <GridListTileBar
+                      onClick={() => handleOpenDialog(i)}
                       title={tile.title}
                       actionIcon={
                         <IconButton
                           aria-label={`star ${tile.title}`}
                           className={classes.icon}
-                          onClick={() => handleOpenDialog(i)}
                         >
                           <Info />
                         </IconButton>
